@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Simon Pétreau, stratège de marque</title>
-<meta name="description" content="L'IA multiplie ce que vous produisez, y compris votre incohérence. Je clarifie le territoire de marque où vous et vos clients vous retrouvez, sans concurrence à l'horizon, puis je le formule pour vos outils d'IA.">
+<meta name="description" content="Votre territoire de marque : là où vos clients vous attendent, et pas vos concurrents. Clarifié en un mois, puis formulé pour votre équipe et vos outils d'IA.">
 <meta property="og:title" content="Simon Pétreau, stratège de marque">
-<meta property="og:description" content="Fondations de marque en un mois : le territoire où vous et vos clients vous retrouvez, sans concurrence à l'horizon, formulé pour votre équipe et vos outils d'IA.">
+<meta property="og:description" content="Votre territoire de marque : là où vos clients vous attendent, et pas vos concurrents. Fondations de marque en un mois, formulées pour votre équipe et vos outils d'IA.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simonpetreau.fr/">
 <meta property="og:image" content="https://simonpetreau.fr/assets/og.jpg">
@@ -14,7 +14,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c42339'/%3E%3Crect x='8' y='8' width='16' height='16' fill='%23f2f1ed'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;1,400;1,500&family=Inter:wght@400;500;600&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;1,400;1,500&family=Inter:wght@400;500;600&family=Special+Gothic:wdth,wght@75,500..700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#232323;
@@ -31,7 +31,7 @@
     --muted:#cfc9be;
     --shadow:0 18px 40px -18px rgba(60,45,25,.35), 0 2px 6px rgba(60,45,25,.08);
     --paper-img:url("assets/paper.jpg");
-    --display:'Special Gothic Condensed One', 'Arial Narrow', sans-serif;
+    --display:'Special Gothic', 'Arial Narrow', sans-serif;
     --serif:'IBM Plex Serif', Georgia, serif;
     --sans:'Inter', system-ui, -apple-system, sans-serif;
   }
@@ -52,7 +52,10 @@
     box-shadow:var(--shadow); border-radius:2px;
     padding:clamp(28px,5vw,64px); margin:40px 0;
   }
-  h1,h2,h3{font-family:var(--display); text-transform:uppercase; line-height:.95; margin:0; font-weight:400; font-synthesis:none; letter-spacing:.005em}
+  /* Special Gothic en chasse condensée : 500 pour les petits libellés, 600 pour les titres */
+  .kicker,.brand,.nav a span,.btn,.stat-step,.deliv .n,.price-old{font-stretch:75%; font-weight:500; font-synthesis:none}
+  h1,h2,h3,.poster p,.stat .num,.svg-display,.step .big,.price,summary{font-stretch:75%; font-weight:600; font-synthesis:none}
+  h1,h2,h3{font-family:var(--display); text-transform:uppercase; line-height:.95; margin:0; letter-spacing:.005em}
   h1{font-size:clamp(50px,8.6vw,116px)}
   h2{font-size:clamp(40px,5.8vw,74px)}
   h3{font-size:clamp(24px,2.6vw,32px)}
@@ -82,7 +85,7 @@
 
   /* Accroche */
   .hero{display:grid; grid-template-columns:1.4fr .85fr; gap:40px; align-items:center}
-  .hero h1 .line2{display:block; margin-top:.12em}
+  .hero h1 .line2{display:block; margin-top:.3em; font-size:.46em; line-height:1}
   .poster{
     position:relative; background-color:var(--red); color:#fff; padding:34px 30px 40px;
     transform:rotate(3deg); box-shadow:var(--shadow); border:8px solid #f7f6f3;
@@ -233,23 +236,23 @@
   <section class="sheet hero">
     <div>
       <span class="kicker">Stratège de marque pour PME B2B</span>
-      <h1>L'IA multiplie ce que vous produisez.<span class="line2">Y compris votre <span class="red">incohérence.</span></span></h1>
-      <p class="lead" style="margin-top:26px">Je clarifie le territoire de marque où vous et vos clients vous retrouvez, sans concurrence à l'horizon. Puis je le formule pour que votre équipe, vos prestataires et vos outils d'IA l'appliquent.</p>
+      <h1>Votre territoire de marque.<span class="line2">Là où vos clients vous attendent, <span class="red">et pas vos concurrents.</span></span></h1>
+      <p class="lead" style="margin-top:26px">Je le clarifie avec vous, puis je le formule pour que votre équipe et vos outils d'IA l'appliquent.</p>
       <div class="ctas">
         <a class="btn btn-primary" data-cal href="#">Réserver un appel de 30 min</a>
         <a class="btn btn-ghost" href="#principe">Voir le principe</a>
       </div>
     </div>
     <div class="poster textured" aria-hidden="true">
-      <p>Un territoire à vous. Sans concurrence à l'horizon.</p>
-      <small>C'est là que commence votre marque.</small>
+      <p>Fondations de marque. En un mois.</p>
+      <small>Territoire, ADN, message, et leur version pour l'IA.</small>
     </div>
   </section>
 
   <!-- Constat -->
   <section class="sheet reveal" id="constat">
     <span class="kicker">/01/ Le constat</span>
-    <h2>Tout le monde peut produire.<br>Presque plus personne ne se distingue.</h2>
+    <h2>L'IA multiplie ce que vous produisez.<br>Y compris votre <span class="red">incohérence.</span></h2>
     <p class="lead" style="margin-top:22px">Un site, un post, une présentation : l'IA les écrit en une heure. Résultat, les entreprises d'un même secteur finissent par se ressembler. Ce qui vous manque n'est pas la capacité de produire, c'est ce qui rend votre production reconnaissable.</p>
     <div class="stats">
       <div class="stat">
@@ -358,7 +361,7 @@
           <line x1="260" y1="234" x2="260" y2="260" stroke="#232323" stroke-width="1.5" marker-end="url(#arr2)"/>
           <!-- plateforme -->
           <rect x="95" y="266" width="330" height="54" fill="#232323"/>
-          <text x="260" y="303" text-anchor="middle" class="svg-display" font-size="30" fill="#efeeec">Votre plateforme de marque</text>
+          <text x="260" y="303" text-anchor="middle" class="svg-display" font-size="26" fill="#efeeec">Votre plateforme de marque</text>
           <line x1="260" y1="322" x2="260" y2="346" stroke="#232323" stroke-width="1.5" marker-end="url(#arr2)"/>
           <!-- stratégie -->
           <rect x="10" y="352" width="500" height="104" fill="none" stroke="#232323" stroke-width="1.5"/>
