@@ -96,7 +96,7 @@
 
   /* Constat */
   .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:40px}
-  .stat,.panel,.duo div,.essay{border-radius:12px}
+  .stat,.panel,.essay{border-radius:12px}
   .stat{background:var(--card); padding:24px 20px; display:flex; flex-direction:column}
   .constat-top{display:grid; grid-template-columns:1fr minmax(0,440px); gap:36px; align-items:center; margin-top:22px}
   .sector{padding:18px 14px 12px}
@@ -168,17 +168,26 @@
     .wob,.bob,.march,.fade-out,.breathe,.ripple,.lit,.lit-dark,.litc,.barpulse,.unison,.hollow,.talk,.spin{animation:none}
     .js .anim .cv{transform:none; transition:none}
     .g-now{display:none}
+    .pos-brand,.cap-a,.cap-b{animation:none; opacity:1; filter:none}
+    .pos-cap{min-height:0} .pos-cap p{position:static; margin-bottom:8px}
     .loop-out{animation:none; opacity:0} .loop-in{animation:none}
     .flow{display:none}
   }
 
   /* Pourquoi ça tient */
   .concept{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start}
-  .duo{display:grid; gap:16px; margin-top:8px}
-  .duo div{background:var(--card); padding:22px 22px 20px; border-left:4px solid var(--ink)}
-  .duo div:last-child{border-color:var(--blue)}
-  .duo h3{font-size:26px}
-  .duo p{margin:6px 0 0; font-family:var(--serif); font-style:italic; font-size:18px; color:var(--ink-soft)}
+  .twopos{grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:8px}
+  .pos{margin:0; background:var(--card); border-radius:12px; padding:26px 18px 14px; text-align:center}
+  .pos .sub{font-family:var(--serif); font-style:italic; color:var(--ink-soft); margin:4px auto 6px; max-width:none}
+  .pos svg{width:100%; max-width:440px; height:auto; display:block; margin:0 auto}
+  .pos-brand{animation:posdim 12s ease-in-out 3s infinite}
+  @keyframes posdim{0%,36%,100%{opacity:.3; filter:grayscale(1)} 48%,88%{opacity:1; filter:none}}
+  .pos-cap{grid-column:1 / -1; position:relative; min-height:3.2em; text-align:center}
+  .pos-cap p{position:absolute; inset:0; margin:0 auto; max-width:none}
+  .cap-a{animation:capa 12s ease-in-out 3s infinite}
+  .cap-b{opacity:0; animation:capb 12s ease-in-out 3s infinite}
+  @keyframes capa{0%,36%,100%{opacity:1} 46%,90%{opacity:0}}
+  @keyframes capb{0%,38%,100%{opacity:0} 48%,88%{opacity:1}}
 
   /* Offre */
   .offer-flow{display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-top:44px}
@@ -195,7 +204,7 @@
   /* Méthode */
   .gantt{margin-top:40px}
   .g-head,.g-rows{display:grid; grid-template-columns:repeat(4,1fr)}
-  .g-head span{font-family:var(--serif); font-style:italic; font-size:15px; color:var(--ink-soft); padding:0 0 8px 10px; border-left:1.5px solid var(--ink)}
+  .g-head > span{font-family:var(--serif); font-style:italic; font-size:15px; color:var(--ink-soft); padding:0 0 8px 10px; border-left:1.5px solid var(--ink)}
   .g-rows{position:relative; row-gap:8px; padding:10px 0 12px; border-top:1.5px solid var(--ink);
     background:repeating-linear-gradient(90deg, rgba(35,35,35,.35) 0 1.5px, transparent 1.5px 25%)}
   .g-bar{background:var(--ink); color:var(--paper); font-family:var(--display); font-stretch:75%; font-weight:500; text-transform:uppercase; letter-spacing:.05em; font-size:15px; padding:7px 10px; border-radius:8px; margin:0 6px 0 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -274,6 +283,8 @@
 
   @media (max-width:960px){
     .hero, .concept, .promise, .price-card, .panels, .constat-top{grid-template-columns:1fr}
+    .twopos{grid-template-columns:1fr}
+    .pos-cap{min-height:5.4em}
     .stats, .essays, .offer-flow{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:repeat(2,1fr)}
     .poster{transform:rotate(2deg); margin:10px 8px}
@@ -705,9 +716,55 @@
     <div>
       <p style="margin-top:0">Votre territoire de marque se trouve là où ce que vous êtes rencontre ce que vos clients cherchent à être, et ce que les alternatives ne sont pas.</p>
       <p>Vos clients détiennent une partie de la réponse : ils me disent ce qu'ils ne vous disent pas. Je confronte leur parole à votre vision et à votre marché, et le territoire apparaît. Il n'est pas imaginé, il est extrait de ce qui est déjà là.</p>
-      <div class="duo">
-        <div><h3>Positionnement business</h3><p>Pourquoi on achète votre offre ?</p></div>
-        <div><h3>Positionnement de marque</h3><p>Pourquoi on vous achète, vous ?</p></div>
+    </div>
+    <div class="twopos anim">
+      <figure class="pos">
+        <h3>Positionnement business</h3>
+        <p class="sub">Pourquoi on achète votre offre ?</p>
+        <svg class="dia" viewBox="0 0 380 304" aria-hidden="true">
+          <defs><clipPath id="pbB"><circle cx="230" cy="132" r="66"/></clipPath><clipPath id="pbC"><circle cx="190" cy="200" r="66"/></clipPath></defs>
+          <g class="pz" style="--d:0s"><circle cx="150" cy="132" r="66" fill="#f4f3f0"/><circle cx="230" cy="132" r="66" fill="#f4f3f0"/><circle cx="190" cy="200" r="66" fill="#f4f3f0"/></g>
+          <g class="pz" style="--d:1s">
+            <circle class="breathe" cx="150" cy="132" r="66" fill="#9fd6bd" clip-path="url(#pbB)"/>
+            <circle cx="150" cy="132" r="66" fill="#c42339" clip-path="url(#pbC)"/>
+            <g clip-path="url(#pbB)"><circle cx="150" cy="132" r="66" fill="#e4d18c" clip-path="url(#pbC)"/></g>
+          </g>
+          <g fill="none" stroke="#232323" stroke-width="1.5">
+            <circle class="ln" pathLength="1" style="--d:0s" cx="150" cy="132" r="66"/><circle class="ln" pathLength="1" style="--d:.25s" cx="230" cy="132" r="66"/><circle class="ln" pathLength="1" style="--d:.5s" cx="190" cy="200" r="66"/>
+          </g>
+          <g class="pz" style="--d:1.60s"><circle class="bob" style="--w:2.2s" cx="182" cy="96" r="5" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:1.95s"><circle class="bob" style="--w:2.7s" cx="198" cy="108" r="5" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:2.30s"><circle class="bob" style="--w:3.2s" cx="186" cy="122" r="5" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:2.65s"><circle class="bob" style="--w:3.7s" cx="200" cy="88" r="5" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g>
+          <g class="pz" style="--d:.3s" text-anchor="middle">
+            <text x="104" y="30" class="svg-serif svg-ink"><tspan x="104">Ce que vous</tspan><tspan x="104" dy="19">offrez</tspan></text>
+            <text x="276" y="30" class="svg-serif svg-ink"><tspan x="276">Ce que vos clients</tspan><tspan x="276" dy="19">veulent obtenir</tspan></text>
+            <text x="190" y="292" class="svg-serif svg-ink">Ce que les alternatives offrent</text>
+          </g>
+        </svg>
+      </figure>
+      <figure class="pos pos-brand">
+        <h3>Positionnement de marque</h3>
+        <p class="sub">Pourquoi on vous achète, vous ?</p>
+        <svg class="dia" viewBox="0 0 380 304" aria-hidden="true">
+          <defs><clipPath id="pmB"><circle cx="230" cy="132" r="66"/></clipPath><clipPath id="pmC"><circle cx="190" cy="200" r="66"/></clipPath></defs>
+          <g class="pz" style="--d:0s"><circle cx="150" cy="132" r="66" fill="#f4f3f0"/><circle cx="230" cy="132" r="66" fill="#f4f3f0"/><circle cx="190" cy="200" r="66" fill="#f4f3f0"/></g>
+          <g class="pz" style="--d:1s">
+            <circle class="breathe" cx="150" cy="132" r="66" fill="#9fd6bd" clip-path="url(#pmB)"/>
+            <circle cx="150" cy="132" r="66" fill="#c42339" clip-path="url(#pmC)"/>
+            <g clip-path="url(#pmB)"><circle cx="150" cy="132" r="66" fill="#e4d18c" clip-path="url(#pmC)"/></g>
+          </g>
+          <g fill="none" stroke="#232323" stroke-width="1.5">
+            <circle class="ln" pathLength="1" style="--d:0s" cx="150" cy="132" r="66"/><circle class="ln" pathLength="1" style="--d:.25s" cx="230" cy="132" r="66"/><circle class="ln" pathLength="1" style="--d:.5s" cx="190" cy="200" r="66"/>
+          </g>
+          <g class="pz" style="--d:1.4s"><circle class="ripple" cx="190" cy="104" r="5" fill="none" stroke="#2e8b68" stroke-width="1.5"/><circle class="ripple" style="animation-delay:1.3s" cx="190" cy="104" r="5" fill="none" stroke="#2e8b68" stroke-width="1.5"/><circle cx="190" cy="104" r="4" fill="#232323"/></g>
+          <g class="pz" style="--d:.3s" text-anchor="middle">
+            <text x="104" y="30" class="svg-serif svg-ink"><tspan x="104">Ce que vous</tspan><tspan x="104" dy="19">êtes</tspan></text>
+            <text x="276" y="30" class="svg-serif svg-ink"><tspan x="276">Ce que vos clients</tspan><tspan x="276" dy="19">cherchent à être</tspan></text>
+            <text x="190" y="292" class="svg-serif svg-ink">Ce que les alternatives sont</text>
+          </g>
+        </svg>
+      </figure>
+      <div class="pos-cap">
+        <p class="lead cap-a">La plupart des entreprises s'arrêtent au premier. Il fait vendre, mais il s'imite.</p>
+        <p class="lead cap-b">Le second ne se copie pas. Il protège le premier.</p>
       </div>
     </div>
   </section>
