@@ -230,6 +230,15 @@
 
   /* Promesse */
   .promise{display:grid; grid-template-columns:1fr 1fr; gap:30px}
+  /* Sphère de clarté : net à l'intérieur, flou autour */
+  .clarity{grid-column:1 / -1; position:relative; height:clamp(220px,30vw,340px); border-radius:12px; background:var(--card); overflow:hidden; font-size:clamp(8.5px,1.25vw,16px); --r:clamp(64px,10vw,118px); --x:50%; --y:50%}
+  .clarity .layer{position:absolute; inset:0}
+  .clarity .w{position:absolute; transform:translate(-50%,-50%); white-space:nowrap; font-family:var(--display); font-stretch:75%; font-weight:600; text-transform:uppercase; line-height:1; color:var(--ink)}
+  .js .clarity .fog{filter:blur(7px); opacity:.5}
+  .clarity .clear{background:#e2f1ea; clip-path:circle(var(--r) at var(--x) var(--y))}
+  .clarity .orb{position:absolute; left:var(--x); top:var(--y); width:calc(var(--r) * 2); height:calc(var(--r) * 2); transform:translate(-50%,-50%); border-radius:50%; border:1.5px solid var(--ink); pointer-events:none;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.55), rgba(255,255,255,0) 42%); box-shadow:inset -10px -14px 30px rgba(46,139,104,.18)}
+  .clarity .clear:empty, .clarity .clear:empty + .orb{display:none}
   .promise .no h3{color:var(--ink-soft); text-decoration:line-through; text-decoration-thickness:3px; text-decoration-color:var(--red)}
 
   /* Prix */
@@ -781,6 +790,11 @@
       <h3>La clarté.</h3>
       <p>Savoir ce que vous dites, à qui, et pourquoi vous plutôt qu'un autre. Et pouvoir le transmettre à votre équipe comme à vos outils.</p>
     </div>
+    <div class="clarity" aria-hidden="true">
+      <div class="layer fog"><span class="w" style="left:21%; top:27%; font-size:2.7em">Ce que vous dites</span><span class="w" style="left:49%; top:20%; font-size:3.4em">À qui</span><span class="w" style="left:77%; top:31%; font-size:3.0em">Pourquoi vous</span><span class="w" style="left:13%; top:64%; font-size:2.2em">Votre ton</span><span class="w" style="left:37%; top:56%; font-size:2.6em">Vos valeurs</span><span class="w" style="left:65%; top:68%; font-size:2.3em">Ce que vous refusez</span><span class="w" style="left:87%; top:74%; font-size:2.0em">Votre message</span><span class="w" style="left:28%; top:86%; font-size:2.0em">Vos clients</span><span class="w" style="left:56%; top:43%; font-size:2.2em">Votre territoire</span><span class="w" style="left:90%; top:14%; font-size:1.8em">Votre vision</span><span class="w" style="left:8%; top:16%; font-size:1.9em">Vos forces</span><span class="w" style="left:48%; top:88%; font-size:1.9em">Votre offre</span></div>
+      <div class="layer clear"></div>
+      <div class="orb"></div>
+    </div>
   </section>
 
   <!-- Prix -->
@@ -895,6 +909,24 @@
     });
   }, {threshold:.6}) : null;
   if (ioCount) document.querySelectorAll('.count').forEach(el => ioCount.observe(el));
+
+  // Sphère de clarté : elle dérive seule, et suit le pointeur quand il survole la zone
+  document.querySelectorAll('.clarity').forEach(box => {
+    const clear = box.querySelector('.clear');
+    clear.innerHTML = box.querySelector('.fog').innerHTML;
+    let x = .5, y = .5, target = null;
+    box.addEventListener('pointermove', e => { const r = box.getBoundingClientRect(); target = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; });
+    box.addEventListener('pointerleave', () => { target = null; });
+    const step = t => {
+      const tx = target ? target[0] : .5 + .34 * Math.sin(t * .00031);
+      const ty = target ? target[1] : .5 + .2 * Math.sin(t * .00047 + 1);
+      x += (tx - x) * .06; y += (ty - y) * .06;
+      box.style.setProperty('--x', (x * 100).toFixed(2) + '%');
+      box.style.setProperty('--y', (y * 100).toFixed(2) + '%');
+      if (!still) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
 </script>
 </body>
 </html>
