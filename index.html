@@ -165,7 +165,9 @@
     .js .anim .pz, .js .anim .ln{opacity:1; transform:none; stroke-dashoffset:0; transition:none}
     .js .anim .m-in{opacity:1; transform:none} .js .anim .m-out{opacity:0}
     .js .anim .grow, .js .anim .growx{transform:none; transition:none}
-    .wob,.bob,.march,.fade-out,.breathe,.ripple,.lit,.lit-dark,.litc,.barpulse,.unison,.hollow{animation:none}
+    .wob,.bob,.march,.fade-out,.breathe,.ripple,.lit,.lit-dark,.litc,.barpulse,.unison,.hollow,.talk,.spin{animation:none}
+    .js .anim .cv{transform:none; transition:none}
+    .g-now{display:none}
     .loop-out{animation:none; opacity:0} .loop-in{animation:none}
     .flow{display:none}
   }
@@ -191,8 +193,26 @@
   @keyframes litc{0%,22%,100%{fill:#232323} 9%{fill:#2e8b68}}
 
   /* Méthode */
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:40px; border-top:1.5px solid var(--ink)}
-  .step{padding:22px 20px 10px 0}
+  .gantt{margin-top:40px}
+  .g-head,.g-rows{display:grid; grid-template-columns:repeat(4,1fr)}
+  .g-head span{font-family:var(--serif); font-style:italic; font-size:15px; color:var(--ink-soft); padding:0 0 8px 10px; border-left:1.5px solid var(--ink)}
+  .g-rows{position:relative; row-gap:8px; padding:10px 0 12px; border-top:1.5px solid var(--ink);
+    background:repeating-linear-gradient(90deg, rgba(35,35,35,.35) 0 1.5px, transparent 1.5px 25%)}
+  .g-bar{background:var(--ink); color:var(--paper); font-family:var(--display); font-stretch:75%; font-weight:500; text-transform:uppercase; letter-spacing:.05em; font-size:15px; padding:7px 10px; border-radius:8px; margin:0 6px 0 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .g-end{background:#2e8b68}
+  .g-now{position:absolute; top:0; bottom:0; left:0; width:1.5px; background:#2e8b68; animation:sweep 9s linear infinite}
+  .g-now::before{content:""; position:absolute; top:-4px; left:-3.25px; width:8px; height:8px; border-radius:50%; background:#2e8b68}
+  @keyframes sweep{from{left:0} to{left:100%}}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:34px}
+  .step{padding:0 0 10px}
+  .sfig svg{width:100%; max-width:240px; height:auto; display:block; margin:0 0 14px}
+  .talk{animation:talk 4.8s ease-in-out var(--l,0s) infinite}
+  @keyframes talk{0%,50%,100%{opacity:.25} 12%,38%{opacity:1}}
+  .spin{transform-box:fill-box; transform-origin:center; animation:spin 14s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .cv{transition:transform 1.3s cubic-bezier(.3,.7,.2,1); transition-delay:var(--d,0s)}
+  .js .anim .cv{transform:translate(var(--tx),var(--ty))}
+  .js .anim.in .cv{transform:none}
   .step .when{font-family:var(--serif); font-style:italic; color:var(--ink-soft); font-size:16px}
   .step .big{font-family:var(--display); font-size:54px; line-height:1; margin:6px 0 10px}
   .step h3{font-size:27px; margin-bottom:8px}
@@ -262,6 +282,8 @@
   @media (max-width:600px){
     body{font-size:16px}
     .stats, .essays, .steps, .offer-flow{grid-template-columns:1fr}
+    .gl{display:none}
+    .g-bar{text-align:center; padding:7px 4px}
     .about{grid-template-columns:1fr; justify-items:start}
     .portrait{width:160px; height:160px}
     .nav{display:none}
@@ -609,11 +631,67 @@
   <section class="sheet reveal" id="methode">
     <span class="kicker">/04/ La méthode</span>
     <h2>Quatre semaines, quatre étapes.</h2>
+    <div class="gantt anim" aria-hidden="true">
+      <div class="g-head"><span>S<span class="gl">emaine </span>1</span><span>S<span class="gl">emaine </span>2</span><span>S<span class="gl">emaine </span>3</span><span>S<span class="gl">emaine </span>4</span></div>
+      <div class="g-rows">
+        <div class="g-bar growx" style="grid-column:1; --d:.2s">01<span class="gl"> Exploration</span></div>
+        <div class="g-bar growx" style="grid-column:2; --d:.6s">02<span class="gl"> Lecture du marché</span></div>
+        <div class="g-bar growx" style="grid-column:2 / 4; --d:1s">03<span class="gl"> Interviews</span></div>
+        <div class="g-bar g-end growx" style="grid-column:4; --d:1.6s">04<span class="gl"> Convergence</span></div>
+        <div class="g-now"></div>
+      </div>
+    </div>
     <div class="steps">
-      <div class="step"><div class="when">Semaine 1</div><div class="big">01</div><h3>Exploration</h3><p>Une session avec vous : votre parcours, votre vision, ce que vous refusez.</p></div>
-      <div class="step"><div class="when">Semaine 2</div><div class="big">02</div><h3>Lecture du marché</h3><p>Vos alternatives réelles, et l'espace qu'elles laissent vide.</p></div>
-      <div class="step"><div class="when">Semaines 2 et 3</div><div class="big">03</div><h3>Interviews</h3><p>J'interroge cinq de vos clients sur ce qui les a fait choisir votre entreprise.</p></div>
-      <div class="step"><div class="when">Semaine 4</div><div class="big">04</div><h3>Convergence</h3><p>La restitution de votre territoire et de votre plateforme de marque, avec sa version exécutable.</p></div>
+      <div class="step anim" style="--o:0.0s">
+        <div class="sfig">
+          <svg class="dia" viewBox="0 0 220 140" aria-hidden="true">
+            <g class="pz" style="--d:calc(var(--o) + 0s)"><path d="M18 22 h96 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-66 l-16 14 v-14 h-14 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10 Z" fill="#fff" stroke="#232323" stroke-width="1.5"/>
+              <g class="talk" style="--l:0s" stroke="#232323" stroke-width="4" stroke-linecap="round"><line x1="24" y1="40" x2="106" y2="40"/><line x1="24" y1="52" x2="92" y2="52"/><line x1="24" y1="64" x2="70" y2="64"/></g></g>
+            <g class="pz" style="--d:calc(var(--o) + 0.5s)"><path d="M106 58 h96 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-14 v14 l-16 -14 h-66 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10 Z" fill="#232323"/>
+              <g class="talk" style="--l:2.4s" stroke="#fff" stroke-width="4" stroke-linecap="round"><line x1="112" y1="76" x2="170" y2="76"/><line x1="112" y1="88" x2="194" y2="88"/><line x1="112" y1="100" x2="150" y2="100"/></g></g>
+          </svg>
+        </div>
+        <div class="when">Semaine 1</div><div class="big">01</div><h3>Exploration</h3><p>Une session avec vous : votre parcours, votre vision, ce que vous refusez.</p>
+      </div>
+      <div class="step anim" style="--o:0.4s">
+        <div class="sfig">
+          <svg class="dia" viewBox="0 0 220 140" aria-hidden="true">
+            <g class="pz" style="--d:calc(var(--o) + 0.0s)"><circle class="bob" style="--w:2.6s" cx="30" cy="34" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.08s)"><circle class="bob" style="--w:3.0s" cx="58" cy="58" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.16s)"><circle class="bob" style="--w:3.4s" cx="36" cy="92" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.24s)"><circle class="bob" style="--w:3.8s" cx="70" cy="112" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.32s)"><circle class="bob" style="--w:2.6s" cx="96" cy="30" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.4s)"><circle class="bob" style="--w:3.0s" cx="180" cy="104" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.48s)"><circle class="bob" style="--w:3.4s" cx="196" cy="60" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:calc(var(--o) + 0.56s)"><circle class="bob" style="--w:3.8s" cx="168" cy="26" r="10" fill="#cfc9be" stroke="#232323" stroke-width="1.5"/></g>
+            <g class="pz" style="--d:calc(var(--o) + 1s)"><circle cx="128" cy="76" r="30" fill="#9fd6bd" fill-opacity=".45"/><circle class="spin" cx="128" cy="76" r="30" fill="none" stroke="#2e8b68" stroke-width="1.5" stroke-dasharray="6 6"/></g>
+          </svg>
+        </div>
+        <div class="when">Semaine 2</div><div class="big">02</div><h3>Lecture du marché</h3><p>Vos alternatives réelles, et l'espace qu'elles laissent vide.</p>
+      </div>
+      <div class="step anim" style="--o:0.8s">
+        <div class="sfig">
+          <svg class="dia" viewBox="0 0 220 140" aria-hidden="true">
+            <g class="pz" style="--d:calc(var(--o) + 0.0s)"><circle class="litc" style="--l:0.0s" cx="26" cy="24" r="12" fill="#232323"/></g><path class="ln" pathLength="1" style="--d:calc(var(--o) + 0.5s)" d="M26 38 C26 62, 110 52, 110 76" fill="none" stroke="#232323" stroke-width="1.5"/><g class="pz" style="--d:calc(var(--o) + 0.12s)"><circle class="litc" style="--l:0.9s" cx="68" cy="24" r="12" fill="#232323"/></g><path class="ln" pathLength="1" style="--d:calc(var(--o) + 0.62s)" d="M68 38 C68 62, 110 52, 110 76" fill="none" stroke="#232323" stroke-width="1.5"/><g class="pz" style="--d:calc(var(--o) + 0.24s)"><circle class="litc" style="--l:1.8s" cx="110" cy="24" r="12" fill="#232323"/></g><path class="ln" pathLength="1" style="--d:calc(var(--o) + 0.74s)" d="M110 38 C110 62, 110 52, 110 76" fill="none" stroke="#232323" stroke-width="1.5"/><g class="pz" style="--d:calc(var(--o) + 0.36s)"><circle class="litc" style="--l:2.7s" cx="152" cy="24" r="12" fill="#232323"/></g><path class="ln" pathLength="1" style="--d:calc(var(--o) + 0.86s)" d="M152 38 C152 62, 110 52, 110 76" fill="none" stroke="#232323" stroke-width="1.5"/><g class="pz" style="--d:calc(var(--o) + 0.48s)"><circle class="litc" style="--l:3.6s" cx="194" cy="24" r="12" fill="#232323"/></g><path class="ln" pathLength="1" style="--d:calc(var(--o) + 0.98s)" d="M194 38 C194 62, 110 52, 110 76" fill="none" stroke="#232323" stroke-width="1.5"/>
+            <g class="pz" style="--d:calc(var(--o) + 1.2s)"><rect x="62" y="78" width="96" height="56" rx="8" fill="#fff" stroke="#232323" stroke-width="1.5"/></g>
+            <g stroke="#232323" stroke-width="4" stroke-linecap="round" fill="none"><path class="ln" pathLength="1" style="--d:calc(var(--o) + 1.5s)" d="M74 94 L146 94"/><path class="ln" pathLength="1" style="--d:calc(var(--o) + 1.7s)" d="M74 106 L136 106"/><path class="ln" pathLength="1" style="--d:calc(var(--o) + 1.9s)" d="M74 118 L116 118"/></g>
+            <g class="pz flow" style="--d:calc(var(--o) + 2s)" fill="#2e8b68"><circle r="3.5"><animateMotion dur="4.5s" begin="-0.0s" repeatCount="indefinite" path="M26 38 C26 62, 110 52, 110 76"/></circle><circle r="3.5"><animateMotion dur="4.5s" begin="-0.9s" repeatCount="indefinite" path="M68 38 C68 62, 110 52, 110 76"/></circle><circle r="3.5"><animateMotion dur="4.5s" begin="-1.8s" repeatCount="indefinite" path="M110 38 C110 62, 110 52, 110 76"/></circle><circle r="3.5"><animateMotion dur="4.5s" begin="-2.7s" repeatCount="indefinite" path="M152 38 C152 62, 110 52, 110 76"/></circle><circle r="3.5"><animateMotion dur="4.5s" begin="-3.6s" repeatCount="indefinite" path="M194 38 C194 62, 110 52, 110 76"/></circle></g>
+          </svg>
+        </div>
+        <div class="when">Semaines 2 et 3</div><div class="big">03</div><h3>Interviews</h3><p>J'interroge cinq de vos clients sur ce qui les a fait choisir votre entreprise.</p>
+      </div>
+      <div class="step anim" style="--o:1.2s">
+        <div class="sfig">
+          <svg class="dia" viewBox="0 0 220 140" aria-hidden="true">
+            <defs><clipPath id="vB"><circle cx="132" cy="56" r="38"/></clipPath><clipPath id="vC"><circle cx="110" cy="92" r="38"/></clipPath></defs>
+            <g class="pz" style="--d:calc(var(--o) + 1.5s)">
+              <circle class="breathe" cx="88" cy="56" r="38" fill="#9fd6bd" clip-path="url(#vB)"/>
+              <circle cx="88" cy="56" r="38" fill="#c42339" clip-path="url(#vC)"/>
+              <g clip-path="url(#vB)"><circle cx="88" cy="56" r="38" fill="#e4d18c" clip-path="url(#vC)"/></g>
+            </g>
+            <g fill="none" stroke="#232323" stroke-width="1.5">
+              <g class="cv" style="--tx:-38px; --ty:-6px; --d:var(--o)"><circle cx="88" cy="56" r="38"/></g>
+              <g class="cv" style="--tx:38px; --ty:-6px; --d:var(--o)"><circle cx="132" cy="56" r="38"/></g>
+              <g class="cv" style="--tx:0px; --ty:34px; --d:var(--o)"><circle cx="110" cy="92" r="38"/></g>
+            </g>
+            <g class="pz" style="--d:calc(var(--o) + 1.8s)"><circle class="ripple" cx="110" cy="36" r="4" fill="none" stroke="#2e8b68" stroke-width="1.5"/><circle cx="110" cy="36" r="3.5" fill="#232323"/></g>
+          </svg>
+        </div>
+        <div class="when">Semaine 4</div><div class="big">04</div><h3>Convergence</h3><p>La restitution de votre territoire et de votre plateforme de marque, avec sa version exécutable.</p>
+      </div>
     </div>
     <span class="time">Votre temps : environ dix heures sur le mois.</span>
   </section>
