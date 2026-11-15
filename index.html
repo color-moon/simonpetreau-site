@@ -97,10 +97,11 @@
   /* Constat */
   .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:40px}
   .stat,.panel,.deliv,.duo div,.essay{border-radius:12px}
-  .stat{background:var(--card); padding:24px 20px; border-top:4px solid var(--ink); display:flex; flex-direction:column}
-  .stat:nth-child(2){border-color:var(--yellow)}
-  .stat:nth-child(3){border-color:var(--pink)}
-  .stat:nth-child(4){border-color:var(--red)}
+  .stat{background:var(--card); padding:24px 20px; display:flex; flex-direction:column}
+  .constat-top{display:grid; grid-template-columns:1fr minmax(0,440px); gap:36px; align-items:center; margin-top:22px}
+  .sector{padding:18px 14px 12px}
+  .mini{width:100%; max-width:230px; height:auto; display:block; margin:2px 0 14px}
+  .mini-t{font-family:var(--sans); font-size:10.5px; fill:var(--ink-soft)}
   .stat .num{font-family:var(--display); font-size:clamp(46px,4.6vw,62px); line-height:1}
   .stat p{font-size:15px; line-height:1.5; margin:14px 0 18px}
   .stat .src{margin-top:auto; font-size:12px; color:var(--ink-soft)}
@@ -143,9 +144,29 @@
   @keyframes litdark{0%,26%,100%{fill:#232323; stroke:#232323} 10%{fill:#2e8b68; stroke:#2e8b68}}
   .barpulse{animation:barpulse 5.2s ease-in-out var(--l,0s) infinite}
   @keyframes barpulse{0%,24%,100%{opacity:.55} 10%{opacity:1}}
+  /* Bascule d'une forme singulière vers un contenu générique */
+  .m-out,.m-in{transition:opacity .5s ease, transform .5s ease; transition-delay:var(--d,0s); transform-box:fill-box; transform-origin:center}
+  .js .anim .m-in{opacity:0; transform:scale(.6)}
+  .js .anim.in .m-in{opacity:1; transform:none}
+  .js .anim.in .m-out{opacity:0; transform:scale(.6)}
+  .unison{animation:unison 2.6s ease-in-out infinite alternate}
+  @keyframes unison{from{opacity:.6} to{opacity:1}}
+  .grow,.growx{transform-box:fill-box; transition:transform .9s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s)}
+  .grow{transform-origin:bottom} .growx{transform-origin:left}
+  .js .anim .grow{transform:scaleY(0)} .js .anim .growx{transform:scaleX(0)}
+  .js .anim.in .grow,.js .anim.in .growx{transform:none}
+  .loop-out{animation:loopout 7s ease-in-out var(--l,0s) infinite}
+  .loop-in{animation:loopin 7s ease-in-out var(--l,0s) infinite}
+  @keyframes loopout{0%,18%{opacity:1} 30%,82%{opacity:0} 94%,100%{opacity:1}}
+  @keyframes loopin{0%,18%{opacity:0} 30%,82%{opacity:1} 94%,100%{opacity:0}}
+  .hollow{animation:hollow 4.8s ease-in-out var(--l,0s) infinite}
+  @keyframes hollow{0%,20%,100%{fill:#232323} 45%,75%{fill:#fbfbfa}}
   @media (prefers-reduced-motion:reduce){
     .js .anim .pz, .js .anim .ln{opacity:1; transform:none; stroke-dashoffset:0; transition:none}
-    .wob,.bob,.march,.fade-out,.breathe,.ripple,.lit,.lit-dark,.barpulse{animation:none}
+    .js .anim .m-in{opacity:1; transform:none} .js .anim .m-out{opacity:0}
+    .js .anim .grow, .js .anim .growx{transform:none; transition:none}
+    .wob,.bob,.march,.fade-out,.breathe,.ripple,.lit,.lit-dark,.barpulse,.unison,.hollow{animation:none}
+    .loop-out{animation:none; opacity:0} .loop-in{animation:none}
     .flow{display:none}
   }
 
@@ -227,7 +248,7 @@
   }
 
   @media (max-width:960px){
-    .hero, .concept, .promise, .price-card, .panels{grid-template-columns:1fr}
+    .hero, .concept, .promise, .price-card, .panels, .constat-top{grid-template-columns:1fr}
     .stats, .essays{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:repeat(2,1fr)}
     .poster{transform:rotate(2deg); margin:10px 8px}
@@ -283,29 +304,68 @@
   <section class="sheet reveal" id="constat">
     <span class="kicker">/01/ Le constat</span>
     <h2>L'IA multiplie ce que vous produisez.<br>Y compris votre <span class="red">incohérence.</span></h2>
-    <p class="lead" style="margin-top:22px">Un site, un post, une présentation : l'IA les écrit en une heure. Résultat, les entreprises d'un même secteur finissent par se ressembler. Ce qui vous manque n'est pas la capacité de produire, c'est ce qui rend votre production reconnaissable.</p>
+    <div class="constat-top">
+      <p class="lead">Un site, un post, une présentation : l'IA les écrit en une heure. Résultat, les entreprises d'un même secteur finissent par se ressembler. Ce qui vous manque n'est pas la capacité de produire, c'est ce qui rend votre production reconnaissable.</p>
+      <figure class="panel anim sector">
+        <svg class="dia" viewBox="0 0 420 300" role="img" aria-label="Douze entreprises d'un même secteur, d'abord toutes différentes. Onze finissent par produire le même contenu générique. Une seule reste reconnaissable.">
+          <g class="pz" style="--d:0.00s"><g class="m-out" style="--d:1.20s"><circle cx="63" cy="52" r="24" fill="#e8a0a0"/></g><g class="m-in" style="--d:1.20s"><g class="unison"><rect x="43" y="27" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="52" y1="42" x2="74" y2="42"/><line x1="52" y1="53" x2="74" y2="53"/><line x1="52" y1="64" x2="66" y2="64"/></g></g></g></g>
+          <g class="pz" style="--d:0.05s"><g class="m-out" style="--d:2.60s"><path d="M161 26 L187 72 L135 72 Z" fill="#1f7fe0"/></g><g class="m-in" style="--d:2.60s"><g class="unison"><rect x="141" y="27" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="150" y1="42" x2="172" y2="42"/><line x1="150" y1="53" x2="172" y2="53"/><line x1="150" y1="64" x2="164" y2="64"/></g></g></g></g>
+          <g class="pz" style="--d:0.10s"><g class="m-out" style="--d:3.72s"><rect x="238" y="31" width="42" height="42" fill="#4a4743" transform="rotate(45 259 52)"/></g><g class="m-in" style="--d:3.72s"><g class="unison"><rect x="239" y="27" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="248" y1="42" x2="270" y2="42"/><line x1="248" y1="53" x2="270" y2="53"/><line x1="248" y1="64" x2="262" y2="64"/></g></g></g></g>
+          <g class="pz" style="--d:0.15s"><g class="m-out" style="--d:2.04s"><path d="M331 66 A26 26 0 0 1 383 66 Z" fill="#e4d18c"/></g><g class="m-in" style="--d:2.04s"><g class="unison"><rect x="337" y="27" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="346" y1="42" x2="368" y2="42"/><line x1="346" y1="53" x2="368" y2="53"/><line x1="346" y1="64" x2="360" y2="64"/></g></g></g></g>
+          <g class="pz" style="--d:0.20s"><g class="m-out" style="--d:3.16s"><rect x="35" y="121" width="56" height="30" rx="15" fill="#cfc9be"/></g><g class="m-in" style="--d:3.16s"><g class="unison"><rect x="43" y="111" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="52" y1="126" x2="74" y2="126"/><line x1="52" y1="137" x2="74" y2="137"/><line x1="52" y1="148" x2="66" y2="148"/></g></g></g></g>
+          <g class="pz" style="--d:0.25s"><g class="m-out" style="--d:1.48s"><path d="M153 112 h16 v16 h16 v16 h-16 v16 h-16 v-16 h-16 v-16 h16 Z" fill="#1f7fe0"/></g><g class="m-in" style="--d:1.48s"><g class="unison"><rect x="141" y="111" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="150" y1="126" x2="172" y2="126"/><line x1="150" y1="137" x2="172" y2="137"/><line x1="150" y1="148" x2="164" y2="148"/></g></g></g></g>
+          <g class="pz" style="--d:.3s"><g class="bob" style="--w:2.8s"><circle cx="259" cy="136" r="25" fill="#9fd6bd" stroke="#232323" stroke-width="1.5"/><circle class="ripple" cx="259" cy="136" r="6" fill="none" stroke="#2e8b68" stroke-width="1.5"/><circle cx="259" cy="136" r="4" fill="#232323"/></g></g>
+          <g class="pz" style="--d:0.35s"><g class="m-out" style="--d:4.00s"><path d="M357 110 L383 156 L331 156 Z" fill="#4a4743"/></g><g class="m-in" style="--d:4.00s"><g class="unison"><rect x="337" y="111" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="346" y1="126" x2="368" y2="126"/><line x1="346" y1="137" x2="368" y2="137"/><line x1="346" y1="148" x2="360" y2="148"/></g></g></g></g>
+          <g class="pz" style="--d:0.40s"><g class="m-out" style="--d:2.32s"><rect x="42" y="199" width="42" height="42" fill="#e4d18c" transform="rotate(45 63 220)"/></g><g class="m-in" style="--d:2.32s"><g class="unison"><rect x="43" y="195" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="52" y1="210" x2="74" y2="210"/><line x1="52" y1="221" x2="74" y2="221"/><line x1="52" y1="232" x2="66" y2="232"/></g></g></g></g>
+          <g class="pz" style="--d:0.45s"><g class="m-out" style="--d:3.44s"><path d="M135 234 A26 26 0 0 1 187 234 Z" fill="#e8a0a0"/></g><g class="m-in" style="--d:3.44s"><g class="unison"><rect x="141" y="195" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="150" y1="210" x2="172" y2="210"/><line x1="150" y1="221" x2="172" y2="221"/><line x1="150" y1="232" x2="164" y2="232"/></g></g></g></g>
+          <g class="pz" style="--d:0.50s"><g class="m-out" style="--d:1.76s"><rect x="231" y="205" width="56" height="30" rx="15" fill="#cfc9be"/></g><g class="m-in" style="--d:1.76s"><g class="unison"><rect x="239" y="195" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="248" y1="210" x2="270" y2="210"/><line x1="248" y1="221" x2="270" y2="221"/><line x1="248" y1="232" x2="262" y2="232"/></g></g></g></g>
+          <g class="pz" style="--d:0.55s"><g class="m-out" style="--d:2.88s"><path d="M349 196 h16 v16 h16 v16 h-16 v16 h-16 v-16 h-16 v-16 h16 Z" fill="#1f7fe0"/></g><g class="m-in" style="--d:2.88s"><g class="unison"><rect x="337" y="195" width="40" height="50" rx="6" fill="#cfc9be"/><g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><line x1="346" y1="210" x2="368" y2="210"/><line x1="346" y1="221" x2="368" y2="221"/><line x1="346" y1="232" x2="360" y2="232"/></g></g></g></g>
+          <text x="210" y="290" text-anchor="middle" class="svg-serif">Même secteur, mêmes outils, mêmes contenus. <tspan class="svg-ink">Sauf une.</tspan></text>
+        </svg>
+      </figure>
+    </div>
     <div class="stats">
-      <div class="stat">
+      <div class="stat anim">
         <div class="stat-step">Tout le monde s'y met</div>
-        <div class="num">55&nbsp;%</div>
+        <svg class="mini dia" viewBox="0 0 200 76" aria-hidden="true">
+          <line x1="8" y1="60" x2="192" y2="60" stroke="#232323" stroke-width="1.5"/>
+          <rect class="grow" style="--d:.2s" x="34" y="46" width="46" height="14" fill="#cfc9be"/>
+          <rect class="grow" style="--d:.5s" x="116" y="9" width="46" height="51" fill="#232323"/>
+          <text x="57" y="74" text-anchor="middle" class="mini-t">il y a 2 ans</text><text x="139" y="74" text-anchor="middle" class="mini-t">aujourd'hui</text>
+        </svg>
+        <div class="num"><span class="count" data-to="55">55</span>&nbsp;%</div>
         <p>des PME-ETI françaises ont lancé des projets IA. Elles n'étaient que 15&nbsp;% deux ans plus tôt.</p>
         <div class="src">Source : <a href="https://www.siparex.com/wp-content/uploads/2026/04/CP_Les-audacieux-de-lIA_Siparex-x-BPIFrance_Avril2026-siteweb.pdf" target="_blank" rel="noopener">Siparex et Bpifrance, 2026</a></div>
       </div>
-      <div class="stat">
+      <div class="stat anim">
         <div class="stat-step">Peu savent où aller</div>
-        <div class="num">43&nbsp;%</div>
+        <svg class="mini dia" viewBox="0 0 200 76" aria-hidden="true">
+          <text x="8" y="12" class="mini-t">y voient une question de survie</text>
+          <rect x="8" y="18" width="184" height="12" rx="6" fill="none" stroke="#232323" stroke-width="1.5" opacity=".25"/>
+          <rect class="growx" style="--d:.2s" x="8" y="18" width="107" height="12" rx="6" fill="#cfc9be"/>
+          <text x="8" y="50" class="mini-t">ont défini une stratégie</text>
+          <rect x="8" y="56" width="184" height="12" rx="6" fill="none" stroke="#232323" stroke-width="1.5" opacity=".25"/>
+          <rect class="growx" style="--d:.5s" x="8" y="56" width="79" height="12" rx="6" fill="#232323"/>
+        </svg>
+        <div class="num"><span class="count" data-to="43">43</span>&nbsp;%</div>
         <p>des dirigeants de PME et ETI ont défini une stratégie IA, alors que 58&nbsp;% y voient une question de survie.</p>
         <div class="src">Source : <a href="https://www.actuia.com/actualite/lia-dans-les-pme-et-eti-francaises-un-territoire-encore-a-explorer-selon-bpifrance/" target="_blank" rel="noopener">Bpifrance Le Lab, 2025</a></div>
       </div>
-      <div class="stat">
+      <div class="stat anim">
         <div class="stat-step">Tout finit par se ressembler</div>
+        <svg class="mini dia" viewBox="0 0 200 76" aria-hidden="true">
+          <g class="loop-out" style="--l:0.00s"><circle cx="28" cy="38" r="14" fill="#e8a0a0"/></g><g class="loop-in" style="--l:0.00s"><rect x="17" y="24" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="23" y1="33" x2="33" y2="33" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="23" y1="41" x2="30" y2="41" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="loop-out" style="--l:0.25s"><path d="M64 23 L79 51 L49 51 Z" fill="#1f7fe0"/></g><g class="loop-in" style="--l:0.25s"><rect x="53" y="24" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="59" y1="33" x2="69" y2="33" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="59" y1="41" x2="66" y2="41" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="loop-out" style="--l:0.50s"><rect x="88" y="26" width="24" height="24" fill="#e4d18c" transform="rotate(45 100 38)"/></g><g class="loop-in" style="--l:0.50s"><rect x="89" y="24" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="95" y1="33" x2="105" y2="33" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="95" y1="41" x2="102" y2="41" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="loop-out" style="--l:0.75s"><rect x="120" y="29" width="32" height="18" rx="9" fill="#4a4743"/></g><g class="loop-in" style="--l:0.75s"><rect x="125" y="24" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="131" y1="33" x2="141" y2="33" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="131" y1="41" x2="138" y2="41" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="loop-out" style="--l:1.00s"><path d="M157 46 A15 15 0 0 1 187 46 Z" fill="#e8a0a0"/></g><g class="loop-in" style="--l:1.00s"><rect x="161" y="24" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="167" y1="33" x2="177" y2="33" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="167" y1="41" x2="174" y2="41" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g>
+        </svg>
         <div class="num">Uniformes</div>
         <p>Les textes écrits avec l'aide de l'IA se ressemblent davantage entre eux que ceux écrits sans elle.</p>
         <div class="src">Source : <a href="https://doi.org/10.1126/sciadv.adn5290" target="_blank" rel="noopener">Doshi et Hauser, Science Advances, 2024</a></div>
       </div>
-      <div class="stat">
+      <div class="stat anim">
         <div class="stat-step">Et la confiance s'abîme</div>
-        <div class="num">40&nbsp;%</div>
+        <svg class="mini dia" viewBox="0 0 200 76" aria-hidden="true">
+          <g class="pz" style="--d:0.10s"><rect class="hollow" style="--l:0.0s" x="9" y="6" width="22" height="28" rx="4" fill="#232323" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:0.22s"><rect class="hollow" style="--l:0.3s" x="49" y="6" width="22" height="28" rx="4" fill="#232323" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:0.34s"><rect class="hollow" style="--l:0.6s" x="89" y="6" width="22" height="28" rx="4" fill="#232323" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:0.46s"><rect class="hollow" style="--l:0.9s" x="129" y="6" width="22" height="28" rx="4" fill="#232323" stroke="#232323" stroke-width="1.5"/></g><g class="pz" style="--d:0.34s"><rect x="169" y="6" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="175" y1="15" x2="185" y2="15" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="175" y1="23" x2="182" y2="23" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="pz" style="--d:0.40s"><rect x="9" y="42" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="15" y1="51" x2="25" y2="51" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="15" y1="59" x2="22" y2="59" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="pz" style="--d:0.46s"><rect x="49" y="42" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="55" y1="51" x2="65" y2="51" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="55" y1="59" x2="62" y2="59" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="pz" style="--d:0.52s"><rect x="89" y="42" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="95" y1="51" x2="105" y2="51" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="95" y1="59" x2="102" y2="59" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="pz" style="--d:0.58s"><rect x="129" y="42" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="135" y1="51" x2="145" y2="51" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="135" y1="59" x2="142" y2="59" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g><g class="pz" style="--d:0.64s"><rect x="169" y="42" width="22" height="28" rx="4" fill="#cfc9be"/><line x1="175" y1="51" x2="185" y2="51" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="175" y1="59" x2="182" y2="59" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g>
+        </svg>
+        <div class="num"><span class="count" data-to="40">40</span>&nbsp;%</div>
         <p>des salariés ont reçu le mois dernier un travail généré par l'IA, soigné en apparence mais vide. La moitié jugent ensuite son auteur moins fiable.</p>
         <div class="src">Source : <a href="https://betterup.com/workslop-infographic" target="_blank" rel="noopener">Stanford et BetterUp, HBR, 2025</a></div>
       </div>
@@ -634,6 +694,19 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ioAnim.unobserve(e.target); } });
   }, {threshold:.3}) : null;
   document.querySelectorAll('.anim').forEach(el => ioAnim ? ioAnim.observe(el) : el.classList.add('in'));
+
+  // Compteurs : le chiffre monte quand sa carte entre à l'écran
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ioCount = ('IntersectionObserver' in window && !still) ? new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      ioCount.unobserve(e.target);
+      const to = +e.target.dataset.to, t0 = performance.now(), dur = 1100;
+      const tick = t => { const k = Math.min(1, (t - t0) / dur); e.target.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    });
+  }, {threshold:.6}) : null;
+  if (ioCount) document.querySelectorAll('.count').forEach(el => ioCount.observe(el));
 </script>
 </body>
 </html>
