@@ -251,9 +251,18 @@
   .legal{font-size:13px; color:var(--ink-soft); margin-top:14px}
 
   /* À propos */
-  .about{display:grid; grid-template-columns:220px 1fr; gap:38px; align-items:center}
-  .portrait{width:220px; height:220px; border-radius:50%; overflow:hidden; border:6px solid #fff; box-shadow:var(--shadow); background:var(--muted)}
-  .portrait img{width:100%; height:100%; object-fit:cover}
+  /* Photos plein cadre : le cercle s'ouvre au défilement jusqu'à remplir la section */
+  .cine{position:relative; overflow:hidden; --cx:22%; --cy:50%; --rad:118px; --p:0}
+  .cine-bg{position:absolute; inset:0; background-repeat:no-repeat; background-size:cover; clip-path:circle(var(--rad) at var(--cx) var(--cy))}
+  .cine-bg::after{content:""; position:absolute; inset:0; background:var(--veil); opacity:var(--p)}
+  .cine-ring{position:absolute; left:var(--cx); top:var(--cy); width:calc(var(--r0px,118px) * 2 + 12px); height:calc(var(--r0px,118px) * 2 + 12px); transform:translate(-50%,-50%); border-radius:50%; border:6px solid #fff; box-shadow:var(--shadow); opacity:calc(1 - var(--p) * 4); pointer-events:none}
+  .cine-txt{position:relative}
+  .cine-txt, .cine-txt .kicker, .cine-txt .lead{transition:color .45s ease}
+  .cine.on .cine-txt, .cine.on .cine-txt .kicker, .cine.on .cine-txt .lead{color:#fff}
+  .cine.on .cine-txt{text-shadow:0 1px 18px rgba(8,40,90,.45)}
+  .cine.on .btn-primary{background:#fff; color:var(--ink); text-shadow:none}
+  .about{min-height:clamp(380px,36vw,470px); display:flex; align-items:center; --veil:linear-gradient(90deg, rgba(10,50,110,0) 30%, rgba(10,50,110,.42) 62%)}
+  .about .cine-txt{margin-left:46%}
 
   /* Essais */
   .essays{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:34px}
@@ -276,8 +285,8 @@
   details p{margin:12px 0 0}
 
   /* Appel final */
-  .final{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center}
-  .final .photo img{width:100%; max-width:460px; margin:0 auto}
+  .final{min-height:clamp(600px,66vw,880px); --veil:linear-gradient(90deg, rgba(10,50,110,.4) 0%, rgba(10,50,110,0) 46%)}
+  .final .cine-txt{max-width:34%}
   .final h2{font-size:clamp(64px,9vw,118px); white-space:nowrap}
 
   footer{padding:30px 0 50px; font-size:14px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
@@ -304,14 +313,17 @@
     .stats, .essays, .steps, .offer-flow{grid-template-columns:1fr}
     .gl{display:none}
     .g-bar{text-align:center; padding:7px 4px}
-    .about{grid-template-columns:1fr; justify-items:start}
-    .portrait{width:160px; height:160px}
+    .about{display:block; padding-top:324px; --veil:none}
+    .about .cine-bg{bottom:auto; height:300px}
+    .about .cine-txt{margin-left:0}
+    .about.on .cine-txt, .about.on .cine-txt .kicker{color:inherit; text-shadow:none}
+    .about.on .cine-txt .kicker{color:var(--ink-soft)}
+    .final{min-height:800px; --veil:linear-gradient(180deg, rgba(10,50,110,.35) 0%, rgba(10,50,110,0) 40%)}
+    .final .cine-txt{max-width:none}
     .nav{display:none}
     .sheet{margin:24px 0}
     .launch{transform:none}
     .panel{padding:22px 4px 10px}
-    .final{grid-template-columns:1fr}
-    .final .photo{order:2}
   }
 </style>
 </head>
@@ -824,9 +836,10 @@
   -->
 
   <!-- À propos -->
-  <section class="sheet about reveal">
-    <div class="portrait"><img src="assets/portrait.jpg" alt="Portrait de Simon Pétreau" width="520" height="520" loading="lazy"></div>
-    <div>
+  <section class="sheet about cine reveal" data-ar="3" data-fx=".28" data-fy=".42" data-tx=".2" data-ty=".47" data-txm=".5" data-tym="150" data-k="1.06" data-km="1" data-r0="118" data-r0m="104">
+    <div class="cine-bg" style="background-image:url(assets/portrait-ciel.jpg)" role="img" aria-label="Portrait de Simon Pétreau sous un ciel bleu"></div>
+    <div class="cine-ring"></div>
+    <div class="cine-txt">
       <span class="kicker">À propos</span>
       <h2>De designer de marque à stratège.</h2>
       <p>Pendant plus de six ans, j'ai conçu des identités visuelles. J'ai vu trop souvent une belle identité ne rien changer, faute de savoir ce qu'elle devait exprimer. Alors je suis remonté en amont : je clarifie d'abord votre territoire, et sa mise en place vient après.</p>
@@ -860,9 +873,10 @@
   </section>
 
   <!-- Appel final -->
-  <section class="sheet final reveal">
-    <div class="photo"><img src="assets/simon-echecs.webp" alt="Simon Pétreau avance une pièce sur un échiquier" width="1100" height="1010" loading="lazy"></div>
-    <div class="txt">
+  <section class="sheet final cine reveal" data-ar=".562" data-fx=".53" data-fy=".45" data-tx=".53" data-ty=".52" data-txm=".5" data-tym="470" data-k="1" data-km="1.08" data-r0="170" data-r0m="120">
+    <div class="cine-bg" style="background-image:url(assets/echecs-ciel.jpg)" role="img" aria-label="Simon Pétreau avance une pièce sur un échiquier, sous un ciel bleu"></div>
+    <div class="cine-ring"></div>
+    <div class="cine-txt">
       <h2>On joue&nbsp;?</h2>
       <p class="lead" style="margin-top:18px">Trente minutes pour voir où en est votre marque, et ce qu'une plateforme lui apporterait.</p>
       <div class="ctas"><a class="btn btn-primary" data-cal href="#">Réserver un appel de 30 min</a></div>
@@ -909,6 +923,32 @@
     });
   }, {threshold:.6}) : null;
   if (ioCount) document.querySelectorAll('.count').forEach(el => ioCount.observe(el));
+
+  // Photos plein cadre : le cercle part du visage et s'ouvre à mesure que la section monte dans l'écran
+  const cines = [...document.querySelectorAll('.cine')];
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const cineLayout = sec => {
+    const bg = sec.querySelector('.cine-bg');
+    const d = sec.dataset, m = innerWidth <= 600, W = bg.clientWidth, H = bg.clientHeight;
+    const ar = +d.ar, k = +(m ? d.km : d.k), iw = Math.max(W, H * ar) * k, ih = iw / ar;
+    const tx = +(m ? d.txm : d.tx) * W, ty = m ? +d.tym : +d.ty * H;
+    const ox = clamp(d.fx * iw - tx, 0, iw - W), oy = clamp(d.fy * ih - ty, 0, ih - H);
+    const cx = d.fx * iw - ox, cy = d.fy * ih - oy, r0 = +(m ? d.r0m : d.r0);
+    bg.style.backgroundSize = iw + 'px ' + ih + 'px';
+    bg.style.backgroundPosition = (-ox) + 'px ' + (-oy) + 'px';
+    sec._c = {r0, rmax: Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) + 4};
+    sec.style.setProperty('--cx', cx + 'px'); sec.style.setProperty('--cy', cy + 'px'); sec.style.setProperty('--r0px', r0 + 'px');
+  };
+  const cineScroll = () => cines.forEach(sec => {
+    if (!sec._c) return;
+    const top = sec.getBoundingClientRect().top, vh = innerHeight;
+    const p = still ? 0 : clamp((vh * .72 - top) / (vh * .42), 0, 1), e = p * p * (3 - 2 * p);
+    sec.style.setProperty('--p', e.toFixed(3));
+    sec.style.setProperty('--rad', (sec._c.r0 + e * (sec._c.rmax - sec._c.r0)).toFixed(1) + 'px');
+    sec.classList.toggle('on', e > .6);
+  });
+  const cineAll = () => { cines.forEach(cineLayout); cineScroll(); };
+  if (cines.length) { cineAll(); addEventListener('resize', cineAll); addEventListener('load', cineAll); addEventListener('scroll', cineScroll, {passive:true}); }
 
   // Sphère de clarté : elle dérive seule, et suit le pointeur quand il survole la zone
   document.querySelectorAll('.clarity').forEach(box => {
